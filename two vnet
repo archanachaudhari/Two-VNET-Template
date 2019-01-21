@@ -1,0 +1,109 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vnet2Name": {
+        "type": "string",
+        "defaultValue": "VNet2",
+        "metadata": {
+          "description": "Name for VNet 2"
+        }
+      },
+      "vnet2AddressPrefix": {
+        "type": "string",
+        "defaultValue": "192.168.0.0/24",
+        "metadata": {
+          "description": "Address prefix VNet2"
+        }
+      },
+      "vNet3Name": {
+            "type": "string",
+            "defaultValue": "VNet3",
+            "metadata": {
+                "description": "Name for VNet 3"
+            }
+        },
+      "vnet3AddressPrefix": {
+        "type": "string",
+        "defaultValue": "172.10.0.0/24",
+        "metadata": {
+          "description": "Address prefix VNet3"
+        }
+      },
+      "subnet1Prefix": {
+        "type": "string",
+        "defaultValue": "192.168.0.0/26",
+        "metadata": {
+          "description": "Subnet 1 Prefix"
+        }
+      },
+      "subnet1Name": {
+        "type": "string",
+        "defaultValue": "Subnet1",
+        "metadata": {
+          "description": "Subnet 1 Name"
+        }
+      },
+      "subnet3Prefix": {
+        "type": "string",
+        "defaultValue": "172.10.0.0/26",
+        "metadata": {
+          "description": "Subnet 3 Prefix"
+        }
+      },
+      "subnet3Name": {
+        "type": "string",
+        "defaultValue": "Subnet3",
+        "metadata": {
+          "description": "Subnet 3 Name"
+        }
+      }
+    },
+    "variables": {
+      "apiVersion": "2015-06-15"
+    },
+   "resources": [
+      {
+        "apiVersion": "[variables('apiVersion')]",
+        "type": "Microsoft.Network/virtualNetworks",
+        "name": "[parameters('vnet2Name')]",
+        "location": "[resourceGroup().location]",
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "[parameters('vnet2AddressPrefix')]"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "[parameters('subnet1Name')]",
+              "properties": {
+                "addressPrefix": "[parameters('subnet1Prefix')]"
+              }
+            }
+          ]
+        }
+      },
+      {
+      "apiVersion": "[variables('apiVersion')]",
+        "type": "Microsoft.Network/virtualNetworks",
+        "name": "[parameters('vnet3Name')]",
+        "location": "[resourceGroup().location]",
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "[parameters('vnet3AddressPrefix')]"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "[parameters('subnet3Name')]",
+              "properties": {
+                "addressPrefix": "[parameters('subnet3Prefix')]"
+              }
+            }
+          ]
+        }
+      }  
+    ]
+  }
